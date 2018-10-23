@@ -1,3 +1,4 @@
+.idea
 .gradle
 build/
 
@@ -11,4 +12,4 @@ gradle-app.setting
 *.ipr
 *.iws
 *.jar
-.idea
+*.xml
