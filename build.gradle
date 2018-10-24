@@ -41,4 +41,3 @@ task integrationTests(type: Test) {
 task verify {}
 
 verify.dependsOn('test', 'integrationTests')
-
