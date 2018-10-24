@@ -120,7 +120,7 @@ class AccountsServiceTests extends Specification {
     }
 
     @Unroll
-    def 'POST with invalid accountNumber gives 404 response'() {
+    def 'POST with invalid accountNumber = #accountNumber gives 404 response'() {
 
         when:
         MvcResult mvcPOSTSecondResult = mvc.perform(postReqBuilder(requestJSON)).andReturn()
@@ -130,9 +130,9 @@ class AccountsServiceTests extends Specification {
         mvcPOSTSecondResult.response.contentAsString.contains(errorMsg)
 
         where:
-        requestJSON                                                             | errorMsg
-        '''{"firstName": "JOHN", "secondName": "DOE","accountNumber": 0}'''     | 'positive integer should be supplied for accountNumber'
-        '''{"firstName": "JOHN", "secondName": "DOE","accountNumber": -1234}''' | 'positive integer should be supplied for accountNumber'
+        requestJSON                                                             | accountNumber | errorMsg
+        '''{"firstName": "JOHN", "secondName": "DOE","accountNumber": 0}'''     | 0             | 'positive integer should be supplied for accountNumber'
+        '''{"firstName": "JOHN", "secondName": "DOE","accountNumber": -1234}''' | -1234         | 'positive integer should be supplied for accountNumber'
 
     }
 
