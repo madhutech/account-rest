@@ -31,7 +31,7 @@ class AccountsServiceTests extends Specification {
 
     def 'POST and verify response'() {
         when:
-        MvcResult mvcPOSTResult = mvc.perform(postReqBuilder(inputJSON)).andReturn()
+        MvcResult mvcPOSTResult = mvc.perform(postRequestBuilder(inputJSON)).andReturn()
 
         String resultJSON = mvcPOSTResult.response.contentAsString
 
@@ -70,7 +70,7 @@ class AccountsServiceTests extends Specification {
     def 'POST and verify GET results for #accountNumber'() {
 
         when:
-        mvc.perform(postReqBuilder(inputJSON)).andReturn()
+        mvc.perform(postRequestBuilder(inputJSON)).andReturn()
 
         MvcResult mvcGETResult = mvc.perform(get("/accounts")).andReturn()
         String resultJSON = mvcGETResult.response.contentAsString
@@ -90,7 +90,7 @@ class AccountsServiceTests extends Specification {
     def 'POST with duplicate input gives 404 response'() {
 
         when:
-        MvcResult mvcPOSTSecondResult = mvc.perform(postReqBuilder(requestJSON)).andReturn()
+        MvcResult mvcPOSTSecondResult = mvc.perform(postRequestBuilder(requestJSON)).andReturn()
 
         then:
         mvcPOSTSecondResult.response.status == HttpStatus.BAD_REQUEST.value()
@@ -105,7 +105,7 @@ class AccountsServiceTests extends Specification {
     def 'POST with #missingField missing gives 404 response'() {
 
         when:
-        MvcResult mvcPOSTSecondResult = mvc.perform(postReqBuilder(requestJSON)).andReturn()
+        MvcResult mvcPOSTSecondResult = mvc.perform(postRequestBuilder(requestJSON)).andReturn()
 
         then:
         mvcPOSTSecondResult.response.status == HttpStatus.BAD_REQUEST.value()
@@ -123,7 +123,7 @@ class AccountsServiceTests extends Specification {
     def 'POST with invalid accountNumber = #accountNumber gives 404 response'() {
 
         when:
-        MvcResult mvcPOSTSecondResult = mvc.perform(postReqBuilder(requestJSON)).andReturn()
+        MvcResult mvcPOSTSecondResult = mvc.perform(postRequestBuilder(requestJSON)).andReturn()
 
         then:
         mvcPOSTSecondResult.response.status == HttpStatus.BAD_REQUEST.value()
@@ -136,7 +136,7 @@ class AccountsServiceTests extends Specification {
 
     }
 
-    private static MockHttpServletRequestBuilder postReqBuilder(String inputJSON) {
+    private static MockHttpServletRequestBuilder postRequestBuilder(String inputJSON) {
         MockMvcRequestBuilders
                 .post("/accounts")
                 .accept(MediaType.APPLICATION_JSON).content(inputJSON)
